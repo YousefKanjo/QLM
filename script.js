@@ -172,31 +172,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const formData = new FormData(contactForm);
 
-            fetch('/', {
+            fetch(contactForm.action, {
                 method: 'POST',
-                body: new URLSearchParams(formData).toString(),
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-            })
-            .then(response => {
-                if (!response.ok) throw new Error('Form submission failed');
-            })
-            .then(() => {
-                // Track Google Ads conversion
-                if (typeof gtag === 'function') {
-                    gtag('event', 'conversion', {
-                        'send_to': 'AW-17957861353/uiy6CL_Q2JEcEOnv_PJC',
-                        'value': 1.0,
-                        'currency': 'AED'
-                    });
+                body: JSON.stringify(Object.fromEntries(formData)),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 }
-                // Show thank you banner
-                thankYouOverlay.classList.add('active');
-                contactForm.reset();
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Track Google Ads conversion
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'conversion', {
+                            'send_to': 'AW-17957861353/uiy6CL_Q2JEcEOnv_PJC',
+                            'value': 1.0,
+                            'currency': 'AED'
+                        });
+                    }
+                    // Show thank you banner
+                    thankYouOverlay.classList.add('active');
+                    contactForm.reset();
+                } else {
+                    alert('Something went wrong. Please try again or email us directly at training@qlmuae.com');
+                }
             })
             .catch(() => {
-                // Show banner even if offline (form data may still be queued)
-                thankYouOverlay.classList.add('active');
-                contactForm.reset();
+                alert('Something went wrong. Please try again or email us directly at training@qlmuae.com');
             })
             .finally(() => {
                 btn.innerHTML = `
