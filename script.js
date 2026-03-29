@@ -172,10 +172,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const formData = new FormData(contactForm);
 
-            fetch(contactForm.action, {
+            fetch('/', {
                 method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
+                body: new URLSearchParams(formData).toString(),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Form submission failed');
             })
             .then(() => {
                 // Track Google Ads conversion

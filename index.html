@@ -477,10 +477,8 @@
                 <div class="contact-grid">
                     <div class="contact-form-wrapper scroll-animate">
                         <h2 class="contact-form-title">Send Us a Message</h2>
-                        <form class="contact-form" id="contactForm" action="https://formsubmit.co/anas@qlmuae.com" method="POST">
-                            <input type="hidden" name="_subject" value="New Contact from QLM Website">
-                            <input type="hidden" name="_captcha" value="false">
-                            <input type="hidden" name="_template" value="table">
+                        <form class="contact-form" id="contactForm" name="contact" method="POST" data-netlify="true">
+                            <input type="hidden" name="form-name" value="contact">
                             <div class="form-group">
                                 <label for="name" class="form-label">Full Name</label>
                                 <input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" required>
