@@ -178,6 +178,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Accept': 'application/json' }
             })
             .then(() => {
+                // Track Google Ads conversion
+                if (typeof gtag === 'function') {
+                    gtag('event', 'conversion', {
+                        'send_to': 'AW-17957861353/uiy6CL_Q2JEcEOnv_PJC',
+                        'value': 1.0,
+                        'currency': 'AED'
+                    });
+                }
                 // Show thank you banner
                 thankYouOverlay.classList.add('active');
                 contactForm.reset();
